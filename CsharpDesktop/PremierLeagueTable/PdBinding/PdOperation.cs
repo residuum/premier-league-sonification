@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using LibPDBinding;
 using PremierLeagueTable.WebData;
 
@@ -35,6 +36,8 @@ namespace PremierLeagueTable.PdBinding
                 {
                     BufferReady(this, new BufferReadyEventArgs(output));
                 }
+
+                Thread.Sleep(1000*BlockSize * ticks / 44100);
             }
         }
 

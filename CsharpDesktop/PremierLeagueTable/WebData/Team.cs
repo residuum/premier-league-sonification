@@ -11,7 +11,6 @@ namespace PremierLeagueTable.WebData
 
         string _fileName;
         [JsonProperty(PropertyName = "team")]
-
         public string Name { get; set; }
 
         [JsonProperty(PropertyName = "filename")]
