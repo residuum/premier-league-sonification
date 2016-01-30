@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremierLeagueTable", "PremierLeagueTable\PremierLeagueTable.csproj", "{7811482E-A341-4A35-8EFA-DDD920B69773}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibPDBinding", "..\libpd\csharp\LibPDBinding.csproj", "{56E27175-956F-4182-8A74-5DE0CC1FCDC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.csproj", "{C42062D3-FC56-403A-9ECD-CDF8EBD87688}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7811482E-A341-4A35-8EFA-DDD920B69773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7811482E-A341-4A35-8EFA-DDD920B69773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7811482E-A341-4A35-8EFA-DDD920B69773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7811482E-A341-4A35-8EFA-DDD920B69773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56E27175-956F-4182-8A74-5DE0CC1FCDC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E27175-956F-4182-8A74-5DE0CC1FCDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E27175-956F-4182-8A74-5DE0CC1FCDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E27175-956F-4182-8A74-5DE0CC1FCDC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C42062D3-FC56-403A-9ECD-CDF8EBD87688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C42062D3-FC56-403A-9ECD-CDF8EBD87688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C42062D3-FC56-403A-9ECD-CDF8EBD87688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C42062D3-FC56-403A-9ECD-CDF8EBD87688}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
