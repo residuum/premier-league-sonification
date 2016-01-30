@@ -9,6 +9,7 @@ namespace PremierLeagueTable.PdBinding
     {
         readonly int _patchHandle;
         static readonly string DoneReceiver = "done";
+        private Team _team;
 
         public PdOperation(string filePath)
         {
@@ -24,7 +25,7 @@ namespace PremierLeagueTable.PdBinding
             get { return LibPD.BlockSize; }
         }
 
-        public delegate void TeamDone(object sender, EventArgs args);
+        public delegate void TeamDone(object sender, TeamEventArgs args);
 
         public event TeamDone GetNext;
 
@@ -48,7 +49,7 @@ namespace PremierLeagueTable.PdBinding
         {
             if (recv != DoneReceiver) return;
             if (GetNext == null) return;
-            GetNext(this, new EventArgs());
+            GetNext(this, new TeamEventArgs(_team));
         }
 
         ~PdOperation()
@@ -69,6 +70,7 @@ namespace PremierLeagueTable.PdBinding
 
         public void SetCurrentTeam(Team team)
         {
+            _team = team;
             LibPD.SendList("data", team.ToPdArgs());
         }
 

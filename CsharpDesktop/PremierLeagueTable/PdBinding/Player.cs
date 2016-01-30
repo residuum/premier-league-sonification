@@ -37,6 +37,10 @@ namespace PremierLeagueTable.PdBinding
             });
             _operation.GetNext += ((sender, args) =>
             {
+                if (TeamDisplayed != null)
+                {
+                    TeamDisplayed(this, args);
+                }
                 NextTeam();
             });
         }
@@ -72,10 +76,12 @@ namespace PremierLeagueTable.PdBinding
         {
             _operation.SetMaxPoints(table.Maxpoints);
             _teams = new Queue<Team>(table.Teams);
-            Console.WriteLine("   | Team                      | GF | GA |  GD | Pts");
-            Console.WriteLine("----------------------------------------------------");
             NextTeam();
         }
+
+        public delegate void TeamEvent(object sender, TeamEventArgs args);
+        public event TeamEvent TeamDisplaying;
+        public event TeamEvent TeamDisplayed;
 
         void NextTeam()
         {
@@ -84,7 +90,10 @@ namespace PremierLeagueTable.PdBinding
                 if (_teams.Count > 0)
                 {
                     Team team = _teams.Dequeue();
-                    Console.WriteLine("{0:00} | {1} | {2:00} | {3:00} | {4:+00;-00;} | {5:00}", team.Position, team.Name.PadRight(25), team.GoalsFor, team.GoalsAgainst, team.GoalDifference, team.Points);
+                    if (TeamDisplaying != null)
+                    {
+                        TeamDisplaying(this, new TeamEventArgs(team));
+                    }
                     _operation.SetCurrentTeam(team);
                 }
             }

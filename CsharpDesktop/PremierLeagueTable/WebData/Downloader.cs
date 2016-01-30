@@ -7,7 +7,7 @@ namespace PremierLeagueTable.WebData
     {
         public delegate void DownloadReady(object sender, DownloadEventArgs args);
 
-        public event DownloadReady Ready;
+        public event DownloadReady Done;
 
         public async void Download()
         {
@@ -17,9 +17,9 @@ namespace PremierLeagueTable.WebData
             {
                 string jsonData = await content.ReadAsStringAsync();
                 Table table = JsonConvert.DeserializeObject<Table>(jsonData);
-                if (Ready != null)
+                if (Done != null)
                 {
-                    Ready(this, new DownloadEventArgs(table));
+                    Done(this, new DownloadEventArgs(table));
                 }
             }
         }

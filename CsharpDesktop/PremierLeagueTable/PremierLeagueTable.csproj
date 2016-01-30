@@ -36,6 +36,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -50,9 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller.cs" />
+    <Compile Include="NAudioBinding.cs" />
     <Compile Include="PdBinding\BufferReadyEventArgs.cs" />
     <Compile Include="PdBinding\PdOperation.cs" />
     <Compile Include="PdBinding\Player.cs" />
+    <Compile Include="WebData\TeamEventArgs.cs" />
     <Compile Include="WebData\Downloader.cs" />
     <Compile Include="WebData\DownloadEventArgs.cs" />
     <Compile Include="WebData\Table.cs" />
