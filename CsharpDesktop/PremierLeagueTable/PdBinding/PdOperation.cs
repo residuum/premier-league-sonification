@@ -9,14 +9,15 @@ namespace PremierLeagueTable.PdBinding
     {
         readonly int _patchHandle;
         static readonly string DoneReceiver = "done";
-        private Team _team;
+        public readonly int SampleRate = 44100;
+        Team _team;
 
         public PdOperation(string filePath)
         {
             _patchHandle = LibPD.OpenPatch(filePath);
             LibPD.Bang += LibPD_Bang;
             LibPD.Subscribe(DoneReceiver);
-            LibPD.OpenAudio(0, 2, 44100);
+            LibPD.OpenAudio(0, 2, SampleRate);
             LibPD.ComputeAudio(true);
         }
 
@@ -26,7 +27,6 @@ namespace PremierLeagueTable.PdBinding
         }
 
         public delegate void TeamDone(object sender, TeamEventArgs args);
-
         public event TeamDone GetNext;
 
         public void SetOutput(float[] output, int ticks)
@@ -38,7 +38,15 @@ namespace PremierLeagueTable.PdBinding
                     BufferReady(this, new BufferReadyEventArgs(output));
                 }
 
-                Thread.Sleep(1000*BlockSize * ticks / 44100);
+                Thread.Sleep(999 * BlockSize * ticks / SampleRate);
+            }
+        }
+
+        public void Process(float[] output, int ticks)
+        {
+            if (LibPD.Process(ticks, new float[0], output) == 0 && BufferReady != null)
+            {
+                BufferReady(this, new BufferReadyEventArgs(output));
             }
         }
 

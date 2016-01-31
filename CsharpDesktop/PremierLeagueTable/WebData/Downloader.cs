@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace PremierLeagueTable.WebData
 {
-    public class Downloader
+    class Downloader
     {
         public delegate void DownloadReady(object sender, DownloadEventArgs args);
 

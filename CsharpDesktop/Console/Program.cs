@@ -11,13 +11,13 @@ namespace ConsoleImplementation
     {
         static void Main(string[] args)
         {
-            using (Controller output = new Controller(AssetsFolder))
+            using (Controller output = Controller.GetInstance(AssetsFolder))
             {
                 output.Downloaded += ((sender, eventargs) =>
                 {
                     output.Sonify(eventargs.Table);
                 });
-                output.TeamDisplaying += ((sender, eventargs) =>
+                output.TeamStarting += ((sender, eventargs) =>
                 {
                     Team team = eventargs.Team;
                     Console.WriteLine("{0:00} | {1} | {2:00} | {3:00} | {4:+00;-00;} | {5:00}", team.Position, team.Name.PadRight(25), team.GoalsFor, team.GoalsAgainst, team.GoalDifference, team.Points);
@@ -29,7 +29,7 @@ namespace ConsoleImplementation
             }
         }
 
-        private static string AssetsFolder
+        static string AssetsFolder
         {
             get {
                 string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

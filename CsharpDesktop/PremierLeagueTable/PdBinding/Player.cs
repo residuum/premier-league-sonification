@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using PremierLeagueTable.WebData;
 
 namespace PremierLeagueTable.PdBinding
 {
-    public class Player : IDisposable
+    class Player : IDisposable
     {
         readonly PdOperation _operation;
         Queue<Team> _teams;
@@ -25,6 +26,11 @@ namespace PremierLeagueTable.PdBinding
             get { return _operation.BlockSize; }
         }
 
+        public int SampleRate
+        {
+            get { return _operation.SampleRate; }
+        }
+
         public Player(string assetsFolder)
         {
             _operation = new PdOperation(Path.Combine(assetsFolder, "sonification.pd"));
@@ -37,9 +43,9 @@ namespace PremierLeagueTable.PdBinding
             });
             _operation.GetNext += ((sender, args) =>
             {
-                if (TeamDisplayed != null)
+                if (TeamPlayed != null)
                 {
-                    TeamDisplayed(this, args);
+                    TeamPlayed(this, args);
                 }
                 NextTeam();
             });
@@ -53,9 +59,21 @@ namespace PremierLeagueTable.PdBinding
             Dispose(false);
         }
 
-        public void SetOutput(float[] output)
+        //public void SetOutput(float[] output)
+        //{
+        //    ThreadPool.QueueUserWorkItem(new WaitCallback(SetPdOutput), output);
+        //}
+
+        void SetPdOutput(object state)
         {
-            _operation.SetOutput(output, Ticks);
+            float[] buffer = state as float[];
+            if (buffer == null)
+            {
+                return;
+            }
+
+            _operation.Process(buffer, Ticks);
+            //_operation.SetOutput(buffer, Ticks);
         }
 
         public void Dispose()
@@ -80,8 +98,9 @@ namespace PremierLeagueTable.PdBinding
         }
 
         public delegate void TeamEvent(object sender, TeamEventArgs args);
-        public event TeamEvent TeamDisplaying;
-        public event TeamEvent TeamDisplayed;
+        public event TeamEvent TeamStarting;
+        public event TeamEvent TeamPlayed;
+        public event TeamEvent TableDone;
 
         void NextTeam()
         {
@@ -90,13 +109,22 @@ namespace PremierLeagueTable.PdBinding
                 if (_teams.Count > 0)
                 {
                     Team team = _teams.Dequeue();
-                    if (TeamDisplaying != null)
+                    if (TeamStarting != null)
                     {
-                        TeamDisplaying(this, new TeamEventArgs(team));
+                        TeamStarting(this, new TeamEventArgs(team));
                     }
                     _operation.SetCurrentTeam(team);
                 }
+                else if (TableDone != null)
+                {
+                    TableDone(this, new TeamEventArgs(null));
+                }
             }
+        }
+
+        public void Process(float[] buffer)
+        {
+            ThreadPool.QueueUserWorkItem(new WaitCallback(SetPdOutput), buffer);
         }
     }
 }

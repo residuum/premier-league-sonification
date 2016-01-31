@@ -55,7 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
-    <Compile Include="NAudioBinding.cs" />
+    <Compile Include="NAudio\NAudioBinding.cs" />
+    <Compile Include="NAudio\PdProvider.cs" />
     <Compile Include="PdBinding\BufferReadyEventArgs.cs" />
     <Compile Include="PdBinding\PdOperation.cs" />
     <Compile Include="PdBinding\Player.cs" />

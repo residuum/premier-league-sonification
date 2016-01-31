@@ -1,4 +1,5 @@
 ﻿using System;
+using PremierLeagueTable.NAudio;
 using PremierLeagueTable.PdBinding;
 using PremierLeagueTable.WebData;
 
@@ -6,29 +7,54 @@ namespace PremierLeagueTable
 {
     public class Controller : IDisposable
     {
-        private Player _player;
-        private NAudioBinding _naudio;
+        readonly Player _player;
+        readonly NAudioBinding _naudio;
+        static Controller _instance;
 
-        public Controller(string assetsFolder)
+        public static Controller GetInstance(string assetsFolder)
         {
-            Team.BaseFolder = assetsFolder;
-            _player = new Player(assetsFolder);
-            _player.TeamDisplaying += ((sender, args) =>
+            if (_instance == null)
             {
-                if (TeamDisplaying != null)
+                _instance = new Controller(assetsFolder);
+            }
+            _instance.BaseFolder = assetsFolder;
+            return _instance;
+        }
+
+        string BaseFolder
+        {
+            set
+            {
+                Team.BaseFolder = value;
+            } 
+        }
+
+        Controller(string assetsFolder)
+        {
+            _player = new Player(assetsFolder);
+            _player.TeamStarting += ((sender, args) =>
+            {
+                if (TeamStarting != null)
                 {
-                    TeamDisplaying(this, args);
+                    TeamStarting(this, args);
                 }
 
             });
-            _player.TeamDisplayed += ((sender, args) =>
+            _player.TeamPlayed += ((sender, args) =>
             {
-                if (TeamDisplayed != null)
+                if (TeamPlayed != null)
                 {
-                    TeamDisplayed(this, args);
+                    TeamPlayed(this, args);
                 }
             });
-            _naudio = new NAudioBinding(_player.BufferSize);
+            _player.TableDone += ((sender, args) =>
+            {
+                if (TableDone != null)
+                {
+                    TableDone(this, args);
+                }
+            });
+            _naudio = new NAudioBinding(new PdProvider(_player));
 
         }
 
@@ -55,7 +81,7 @@ namespace PremierLeagueTable
             }
         }
 
-        private void DownloaderDone(object sender, DownloadEventArgs args)
+        void DownloaderDone(object sender, DownloadEventArgs args)
         {
             if (Downloaded != null)
             {
@@ -64,26 +90,25 @@ namespace PremierLeagueTable
         }
 
         public delegate void DownloadReady(object sender, DownloadEventArgs args);
-
         public event DownloadReady Downloaded;
 
         public void Sonify(Table table)
         {
             _player.Start(table);
-            _player.SetOutput(_naudio.Buffer);
+            //_player.SetOutput(_naudio.Buffer);
         }
 
         public void Download()
         {
             _naudio.PrepareAudio();
-            _player.BufferReady += ((sender, eventArgs) =>
-            {
-                _naudio.AddSamples(eventArgs.Output);
-            });
+            //_player.BufferReady += ((sender, eventArgs) =>
+            //{
+            //    _naudio.AddSamples(eventArgs.Output);
+            //});
             DownloadTable();
         }
 
-        private void DownloadTable()
+        void DownloadTable()
         {
             Downloader dl = new Downloader();
             dl.Done += DownloaderDone;
@@ -91,7 +116,8 @@ namespace PremierLeagueTable
         }
 
         public delegate void TeamEvent(object sender, TeamEventArgs args);
-        public event TeamEvent TeamDisplaying;
-        public event TeamEvent TeamDisplayed;
+        public event TeamEvent TeamStarting;
+        public event TeamEvent TeamPlayed;
+        public event TeamEvent TableDone;
     }
 }

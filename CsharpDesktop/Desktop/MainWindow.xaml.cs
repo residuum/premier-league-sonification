@@ -19,7 +19,7 @@ namespace Desktop
         public MainWindow()
         {
             InitializeComponent();
-            _controller =new Controller(AssetsFolder);
+            _controller = Controller.GetInstance(AssetsFolder);
             BindController();
             DataContext = _model;
         }
@@ -33,10 +33,25 @@ namespace Desktop
                 {
                     _model.ClearTeams();
                     SonifyBtn.IsEnabled = true;
-                    _model.SetTeams(_table.Teams);
                 }));
             });
-            }
+            _controller.TeamStarting += ((sender, eventargs) =>
+            {
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    Team team = eventargs.Team;
+                    _model.AddTeam(team);
+                }));
+            });
+            _controller.TableDone += ((sender, eventargs) =>
+            {
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    SonifyBtn.IsEnabled = true;
+                    LoadBtn.IsEnabled = true;
+                }));
+            });
+        }
 
         protected override void OnClosed(EventArgs e)
         {
