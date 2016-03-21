@@ -29,6 +29,19 @@ namespace PremierLeagueTable.PdBinding
         public delegate void TeamDone(object sender, TeamEventArgs args);
         public event TeamDone GetNext;
 
+        public void SetOutput(float[] output, int ticks)
+        {
+            while (LibPD.Process(ticks, new float[0], output) == 0)
+            {
+                if (BufferReady != null)
+                {
+                    BufferReady(this, new BufferReadyEventArgs(output));
+                }
+
+                Thread.Sleep(999 * BlockSize * ticks / SampleRate);
+            }
+        }
+
         public void Process(float[] output, int ticks)
         {
             if (LibPD.Process(ticks, new float[0], output) == 0 && BufferReady != null)
