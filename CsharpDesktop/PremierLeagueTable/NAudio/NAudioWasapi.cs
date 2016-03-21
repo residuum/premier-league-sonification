@@ -4,18 +4,18 @@ using NAudio.Wave;
 
 namespace PremierLeagueTable.NAudio
 {
-    class NAudioBinding : IDisposable
+    class NAudioWasapi : IDisposable, INaudioOut
     {
         readonly WasapiOut _soundOutput;
         readonly IWaveProvider _waveProvider;
 
-        public NAudioBinding(IWaveProvider provider)
+        public NAudioWasapi(IWaveProvider provider)
         {
             _waveProvider = provider;
             _soundOutput = new WasapiOut(AudioClientShareMode.Shared, 100);
         }
 
-        ~NAudioBinding()
+        ~NAudioWasapi()
         {
             Dispose(false);
         }

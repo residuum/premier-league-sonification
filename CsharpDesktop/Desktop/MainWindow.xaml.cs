@@ -19,7 +19,7 @@ namespace Desktop
         public MainWindow()
         {
             InitializeComponent();
-            _controller = Controller.GetInstance(AssetsFolder);
+            _controller = Controller.GetInstance(AssetsFolder, UseJack);
             BindController();
             DataContext = _model;
         }
@@ -68,6 +68,14 @@ namespace Desktop
             {
                 string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 return Path.GetFullPath(assemblyFolder + ConfigurationManager.AppSettings["baseFolder"]);
+            }
+        }
+
+        static bool UseJack
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["jack"].ToLower() == "true";
             }
         }
 

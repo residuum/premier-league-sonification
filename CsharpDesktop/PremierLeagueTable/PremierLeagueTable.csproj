@@ -36,8 +36,16 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JackSharp, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JackSharp.0.3.0\lib\net35\JackSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Naudio.Jack, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Naudio.Jack.0.3.0\lib\net35\Naudio.Jack.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -55,7 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
-    <Compile Include="NAudio\NAudioBinding.cs" />
+    <Compile Include="NAudio\INaudioOut.cs" />
+    <Compile Include="NAudio\NAudioJack.cs" />
+    <Compile Include="NAudio\NAudioWasapi.cs" />
     <Compile Include="NAudio\PdProvider.cs" />
     <Compile Include="PdBinding\BufferReadyEventArgs.cs" />
     <Compile Include="PdBinding\PdOperation.cs" />

@@ -8,14 +8,14 @@ namespace PremierLeagueTable
     public class Controller : IDisposable
     {
         readonly Player _player;
-        readonly NAudioBinding _naudio;
+        readonly INaudioOut _naudio;
         static Controller _instance;
 
-        public static Controller GetInstance(string assetsFolder)
+        public static Controller GetInstance(string assetsFolder, bool useJack)
         {
             if (_instance == null)
             {
-                _instance = new Controller(assetsFolder);
+                _instance = new Controller(assetsFolder, useJack);
             }
             _instance.BaseFolder = assetsFolder;
             return _instance;
@@ -29,7 +29,7 @@ namespace PremierLeagueTable
             } 
         }
 
-        Controller(string assetsFolder)
+        Controller(string assetsFolder, bool useJack)
         {
             _player = new Player(assetsFolder);
             _player.TeamStarting += ((sender, args) =>
@@ -54,7 +54,15 @@ namespace PremierLeagueTable
                     TableDone(this, args);
                 }
             });
-            _naudio = new NAudioBinding(new PdProvider(_player));
+            if (useJack)
+            {
+                _naudio = new NAudioJack(new PdProvider(_player));
+            }
+            else
+            {
+                _naudio = new NAudioWasapi(new PdProvider(_player));
+
+            }
 
         }
 

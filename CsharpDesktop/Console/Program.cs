@@ -11,7 +11,7 @@ namespace ConsoleImplementation
     {
         static void Main(string[] args)
         {
-            using (Controller output = Controller.GetInstance(AssetsFolder))
+            using (Controller output = Controller.GetInstance(AssetsFolder, UseJack))
             {
                 output.Downloaded += ((sender, eventargs) =>
                 {
@@ -34,6 +34,13 @@ namespace ConsoleImplementation
             get {
                 string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 return Path.GetFullPath(assemblyFolder + ConfigurationManager.AppSettings["baseFolder"]);
+            }
+        }
+
+        static bool UseJack
+        {
+            get {
+                return ConfigurationManager.AppSettings["jack"].ToLower() == "true";
             }
         }
     }
