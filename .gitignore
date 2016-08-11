@@ -180,3 +180,12 @@ $RECYCLE.BIN/
 .vs/
 
 *.wav
+
+# Android
+*.iml
+.gradle
+/Android/local.properties
+/Android/.idea/workspace.xml
+/Android/.idea/libraries
+/Android/build
+/Android/captures
