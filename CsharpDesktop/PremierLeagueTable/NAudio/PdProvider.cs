@@ -1,4 +1,6 @@
-﻿using NAudio.Utils;
+﻿using System;
+using System.Linq;
+using NAudio.Utils;
 using NAudio.Wave;
 using PremierLeagueTable.PdBinding;
 
@@ -54,6 +56,7 @@ namespace PremierLeagueTable.NAudio
         static byte[] PcmFromFloat(float[] pdOutput)
         {
             WaveBuffer wavebuffer = new WaveBuffer(pdOutput.Length * 4);
+            Console.Write(pdOutput.Where(f => f != 0).Count());
             for (var i = 0; i < pdOutput.Length; i++)
             {
                 wavebuffer.FloatBuffer[i] = pdOutput[i];
