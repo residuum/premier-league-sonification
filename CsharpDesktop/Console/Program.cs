@@ -25,6 +25,8 @@ namespace ConsoleImplementation
                 output.Download();
                 Console.WriteLine("   | Team                      | GF | GA |  GD | Pts");
                 Console.WriteLine("----------------------------------------------------");
+				while (true)
+					;
                 Console.Read();
             }
         }
