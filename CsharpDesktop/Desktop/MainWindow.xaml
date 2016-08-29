@@ -20,12 +20,12 @@
         <Button Grid.Row="0" Grid.Column="2" Click="Sonify" IsEnabled="False" Name="SonifyBtn">Sonify Data</Button>
         <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Teams}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="" Binding="{Binding Position}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Goals For" Binding="{Binding GoalsFor}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Goals Against" Binding="{Binding GoalsAgainst}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Goal Difference" Binding="{Binding GoalDifference}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Points" Binding="{Binding Points}"></DataGridTextColumn>
+                <DataGridTextColumn Header="" Binding="{Binding Position}" CanUserSort="False"></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserSort="False"></DataGridTextColumn>
+                <DataGridTextColumn Header="Goals For" Binding="{Binding GoalsFor}" CanUserSort="False"></DataGridTextColumn>
+                <DataGridTextColumn Header="Goals Against" Binding="{Binding GoalsAgainst}" CanUserSort="False"></DataGridTextColumn>
+                <DataGridTextColumn Header="Goal Difference" Binding="{Binding GoalDifference}" CanUserSort="False"></DataGridTextColumn>
+                <DataGridTextColumn Header="Points" Binding="{Binding Points}" CanUserSort="False"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
