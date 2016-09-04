@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
@@ -30,6 +30,7 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
+		Title = "Premier League";
 		CreateTableColumns ();
 		_controller = Controller.GetInstance (AssetsFolder, UseJack);
 		BindController ();

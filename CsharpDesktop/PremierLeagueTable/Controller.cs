@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using PremierLeagueTable.NAudio;
 using PremierLeagueTable.PdBinding;
 using PremierLeagueTable.WebData;
@@ -103,16 +103,11 @@ namespace PremierLeagueTable
         public void Sonify(Table table)
         {
             _player.Start(table);
-            //_player.SetOutput(_naudio.Buffer);
         }
 
         public void Download()
         {
             _naudio.PrepareAudio();
-            //_player.BufferReady += ((sender, eventArgs) =>
-            //{
-            //    _naudio.AddSamples(eventArgs.Output);
-            //});
             DownloadTable();
         }
 

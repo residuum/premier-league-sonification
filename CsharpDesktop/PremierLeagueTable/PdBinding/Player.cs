@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -59,11 +59,6 @@ namespace PremierLeagueTable.PdBinding
             Dispose(false);
         }
 
-        //public void SetOutput(float[] output)
-        //{
-        //    ThreadPool.QueueUserWorkItem(new WaitCallback(SetPdOutput), output);
-        //}
-
         void SetPdOutput(object state)
         {
             float[] buffer = state as float[];
@@ -73,7 +68,6 @@ namespace PremierLeagueTable.PdBinding
             }
 
             _operation.Process(buffer, Ticks);
-            //_operation.SetOutput(buffer, Ticks);
         }
 
         public void Dispose()

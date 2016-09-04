@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using JackSharp;
 using NAudio.Jack;
 using NAudio.Wave;
