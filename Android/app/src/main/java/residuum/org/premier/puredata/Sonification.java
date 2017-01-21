@@ -46,6 +46,7 @@ public class Sonification {
         intent = new Intent(activity, PdService.class);
         activity.bindService(intent, pdConnection,Context.BIND_AUTO_CREATE);
         activity.startService(intent);
+        Team.setPath(dir.getPath() + File.separator + "clubs");
     }
 
     public void setTable(Table table) {
@@ -112,7 +113,7 @@ public class Sonification {
 
     private void loadPatch() throws IOException {
         IoUtils.extractZipResource(activity.getResources().openRawResource(R.raw.pdlogic), dir, true);
-        File patch = new File(dir, "sonification.pd");
+        File patch = new File(dir + File.separator+ "sonification.pd");
         patchHandle = PdBase.openPatch(patch.getAbsolutePath());
     }
 
